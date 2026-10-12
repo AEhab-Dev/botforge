@@ -1,0 +1,26 @@
+{
+  "name": "@botforge/module-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@botforge/shared-schemas": "workspace:*",
+    "discord.js": "^14.16.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
