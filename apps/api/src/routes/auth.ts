@@ -35,7 +35,7 @@ function setSessionCookie(c: any, token: string) {
   const ttlSeconds = parseInt(process.env["SESSION_TTL_SECONDS"] ?? "604800", 10);
   setCookie(c, COOKIE_NAME, token, {
     httpOnly: true,
-    secure: IS_PROD,
+    secure: false, // set to true once HTTPS is configured
     sameSite: "Lax",
     maxAge: ttlSeconds,
     path: "/",
