@@ -456,7 +456,7 @@ export default function CreateBotPage() {
 
       {/* Step indicator */}
       <div className="mb-8">
-        <StepIndicator steps={STEPS} currentStep={step} />
+        <StepIndicator steps={STEPS} current={step} />
       </div>
 
       {/* Steps */}
