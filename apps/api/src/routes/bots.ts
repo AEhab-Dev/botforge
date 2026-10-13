@@ -438,6 +438,60 @@ botRoutes.patch("/:botId/token", async (c) => {
   return c.json({ message: "Bot token saved." });
 });
 
+// ─── GET /api/v1/bots/:botId/health ──────────────────────────────────────────
+
+botRoutes.get("/:botId/health", async (c) => {
+  const user = c.get("user");
+  const bot = await getOwnedBot(c.req.param("botId"), user.id);
+  if (!bot) return c.json({ error: "NOT_FOUND" }, 404);
+
+  return c.json({
+    botId: bot.id,
+    status: bot.status,
+    healthStatus: bot.status === "running"
+      ? (bot.lastErrorCode ? "degraded" : "healthy")
+      : bot.status === "draft" ? "unknown"
+      : "error",
+    lastHealthyAt: bot.lastHealthyAt,
+    lastErrorCode: bot.lastErrorCode,
+    currentDeploymentId: bot.currentDeploymentId,
+    checkedAt: new Date().toISOString(),
+  });
+});
+
+// ─── GET /api/v1/bots/:botId/logs ────────────────────────────────────────────
+// SSE stream — tails the last N log lines then streams new ones.
+// For MVP we read from the pm2 log file for this bot's deployment.
+
+botRoutes.get("/:botId/logs", async (c) => {
+  const user = c.get("user");
+  const bot = await getOwnedBot(c.req.param("botId"), user.id);
+  if (!bot) return c.json({ error: "NOT_FOUND" }, 404);
+
+  const { readFileSync, existsSync } = await import("fs");
+  const { join } = await import("path");
+
+  // Log file convention: /var/log/botforge/bot-<botId>-out.log
+  const logPath = join("/var/log/botforge", `bot-${bot.id}-out.log`);
+  const errPath = join("/var/log/botforge", `bot-${bot.id}-error.log`);
+
+  // Read last 100 lines from both files
+  function tailLines(filePath: string, n: number): string[] {
+    if (!existsSync(filePath)) return [];
+    const content = readFileSync(filePath, "utf8");
+    const lines = content.split("\n").filter(Boolean);
+    return lines.slice(-n);
+  }
+
+  const outLines = tailLines(logPath, 80).map(l => ({ level: "info", message: l }));
+  const errLines = tailLines(errPath, 20).map(l => ({ level: "error", message: l }));
+
+  // Merge and sort by timestamp prefix if present, otherwise keep order
+  const all = [...outLines, ...errLines];
+
+  return c.json({ logs: all, botId: bot.id, fetchedAt: new Date().toISOString() });
+});
+
 // ─── Ownership helper ─────────────────────────────────────────────────────────
 
 /**

@@ -101,6 +101,10 @@ export const botsApi = {
 
   getDeployments: (id: string) =>
     request<{ deployments: Deployment[] }>(`/bots/${id}/deployments`),
+
+  getHealth: (id: string) => request<BotHealth>(`/bots/${id}/health`),
+
+  getLogs: (id: string) => request<BotLogs>(`/bots/${id}/logs`),
 }
 
 // ─── Modules ──────────────────────────────────────────────────────────────────
@@ -263,6 +267,27 @@ export interface Plan {
   interval: 'month' | null
   botLimit: number
   features: string[]
+}
+
+export interface BotHealth {
+  botId: string
+  status: string
+  healthStatus: 'healthy' | 'degraded' | 'error' | 'unknown'
+  lastHealthyAt: string | null
+  lastErrorCode: string | null
+  currentDeploymentId: string | null
+  checkedAt: string
+}
+
+export interface LogLine {
+  level: 'info' | 'error'
+  message: string
+}
+
+export interface BotLogs {
+  logs: LogLine[]
+  botId: string
+  fetchedAt: string
 }
 
 export { ApiError }

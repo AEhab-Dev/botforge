@@ -15,6 +15,8 @@ import { Input } from '../components/ui/Input'
 import { Modal } from '../components/ui/Modal'
 import { Alert } from '../components/ui/Alert'
 import { Skeleton } from '../components/ui/Skeleton'
+import { BotHealthPanel } from '../components/BotHealthPanel'
+import { BotLogsViewer } from '../components/BotLogsViewer'
 
 // How long to keep polling before showing the "runtime not active" warning
 const DEPLOY_TIMEOUT_MS = 20_000
@@ -254,6 +256,9 @@ export default function BotDetailPage() {
         </div>
       </div>
 
+      {/* Health panel */}
+      <BotHealthPanel botId={botId!} />
+
       {/* Alerts */}
       {!hasToken && (
         <Alert variant="warning" title="No Discord token">
@@ -339,6 +344,9 @@ export default function BotDetailPage() {
           </CardBody>
         </Card>
       </div>
+
+      {/* Logs viewer */}
+      <BotLogsViewer botId={botId!} isRunning={isRunning} />
 
       {/* Danger zone */}
       <Card className="border-[var(--error)]/20">
