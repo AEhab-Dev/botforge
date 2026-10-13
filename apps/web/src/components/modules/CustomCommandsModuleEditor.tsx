@@ -3,7 +3,7 @@ import { Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react'
 import { Input } from '../ui/Input'
 import { Textarea } from '../ui/Textarea'
 import { Button } from '../ui/Button'
-import { Toggle } from '../ui/Toggle'
+
 
 interface Command {
   name: string
@@ -19,7 +19,7 @@ interface CustomCommandsConfig {
 
 interface Props {
   config: CustomCommandsConfig
-  onChange: (config: CustomCommandsConfig) => void
+  onChange: (config: Record<string, unknown>) => void
 }
 
 const EMPTY_COMMAND: Command = {

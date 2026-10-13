@@ -11,7 +11,7 @@ interface WelcomeConfig {
 
 interface Props {
   config: WelcomeConfig
-  onChange: (config: WelcomeConfig) => void
+  onChange: (config: Record<string, unknown>) => void
 }
 
 export function WelcomeModuleEditor({ config, onChange }: Props) {

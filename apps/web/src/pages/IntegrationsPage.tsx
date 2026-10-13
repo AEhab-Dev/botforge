@@ -2,7 +2,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link2, ExternalLink } from 'lucide-react'
 import { discordApi } from '../api/client'
-import { Card, CardHeader, CardBody } from '../components/ui/Card'
+import { Card, CardBody } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { Badge } from '../components/ui/Badge'
 

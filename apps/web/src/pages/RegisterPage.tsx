@@ -11,7 +11,6 @@ import { Alert } from '../components/ui/Alert'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
-  const setUser = useAuthStore(s => s.setUser)
 
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')

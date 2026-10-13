@@ -1,4 +1,4 @@
-import { BookOpen, ExternalLink, Zap, Bot, Settings2, Shield, MessageSquare, Hash } from 'lucide-react'
+import { BookOpen, ExternalLink, Zap, Bot, Settings2, Shield, Hash } from 'lucide-react'
 import { Card, CardBody } from '../components/ui/Card'
 
 const SECTIONS = [

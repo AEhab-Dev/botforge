@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import toast from 'react-hot-toast'
+
 import { Zap, ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react'
 import { authApi } from '../api/client'
 import { Button } from '../components/ui/Button'

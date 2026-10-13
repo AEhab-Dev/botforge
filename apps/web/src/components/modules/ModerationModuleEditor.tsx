@@ -12,7 +12,7 @@ interface ModerationConfig {
 
 interface Props {
   config: ModerationConfig
-  onChange: (config: ModerationConfig) => void
+  onChange: (config: Record<string, unknown>) => void
 }
 
 export function ModerationModuleEditor({ config, onChange }: Props) {

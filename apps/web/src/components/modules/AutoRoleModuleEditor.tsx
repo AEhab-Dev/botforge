@@ -9,7 +9,7 @@ interface AutoRoleConfig {
 
 interface Props {
   config: AutoRoleConfig
-  onChange: (config: AutoRoleConfig) => void
+  onChange: (config: Record<string, unknown>) => void
 }
 
 export function AutoRoleModuleEditor({ config, onChange }: Props) {
