@@ -3,8 +3,8 @@ module.exports = {
     {
       name: "botforge-api",
       cwd: "/opt/botforge/apps/api",
-      script: "npx",
-      args: "tsx src/index.ts",
+      script: "dist/index.js",
+      node_args: "--env-file=/opt/botforge/.env",
       autorestart: true,
       watch: false,
       max_memory_restart: "500M",
