@@ -192,7 +192,7 @@ botRoutes.post("/:botId/config/revisions", async (c) => {
   // Point the bot instance to this revision
   await db
     .update(botInstances)
-    .set({ currentConfigRevisionId: revision.id, updatedAt: new Date() })
+    .set({ currentConfigRevisionId: revision!.id, updatedAt: new Date() })
     .where(eq(botInstances.id, bot.id));
 
   return c.json({ revision }, 201);
