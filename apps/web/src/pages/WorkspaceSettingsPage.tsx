@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import {
-  Settings, Users, UserPlus, Trash2, Shield, ChevronDown, Building2,
+  Settings, Users, UserPlus, Trash2, ChevronDown, Building2,
 } from 'lucide-react'
 import { workspaceApi } from '../api/client'
 import type { WorkspaceMember } from '../api/client'
@@ -327,7 +327,7 @@ export default function WorkspaceSettingsPage() {
 
       {/* ── Invite modal ────────────────────────────────────────── */}
       <Modal
-        isOpen={showInvite}
+        open={showInvite}
         onClose={() => setShowInvite(false)}
         title="Invite team member"
         description="They need a BotForge account to accept the invite."
@@ -382,7 +382,7 @@ export default function WorkspaceSettingsPage() {
 
       {/* ── Remove confirm modal ────────────────────────────────── */}
       <Modal
-        isOpen={!!removeTarget}
+        open={!!removeTarget}
         onClose={() => setRemoveTarget(null)}
         title="Remove member"
         description={`Remove ${removeTarget?.displayName} from this workspace? They'll lose access to all bots immediately.`}
