@@ -20,12 +20,12 @@ interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
   title?: string
   /** Renders a muted description line below the title */
   description?: string
+  /** Optional action element rendered on the right */
+  action?: ReactNode
 }
 
-export function CardHeader({ className, icon, title, description, children, ...props }: CardHeaderProps) {
-  // If structured props are passed, render the compound layout;
-  // otherwise fall back to rendering children as-is (plain wrapper behaviour).
-  const hasStructured = icon !== undefined || title !== undefined || description !== undefined
+export function CardHeader({ className, icon, title, description, action, children, ...props }: CardHeaderProps) {
+  const hasStructured = icon !== undefined || title !== undefined || description !== undefined || action !== undefined
 
   return (
     <div className={cn('px-5 py-4 border-b border-[var(--border)]', className)} {...props}>
@@ -41,6 +41,7 @@ export function CardHeader({ className, icon, title, description, children, ...p
             )}
             {children}
           </div>
+          {action && <div className="shrink-0">{action}</div>}
         </div>
       ) : (
         children

@@ -23,6 +23,7 @@ import BillingPage from './pages/BillingPage'
 import IntegrationsPage from './pages/IntegrationsPage'
 import DocsPage from './pages/DocsPage'
 import SupportPage from './pages/SupportPage'
+import WorkspaceSettingsPage from './pages/WorkspaceSettingsPage'
 
 // Public
 import HomePage from './pages/public/HomePage'
@@ -57,6 +58,7 @@ export default function App() {
               <Route path="/bots/:botId" element={<BotDetailPage />} />
               <Route path="/bots/:botId/config" element={<BotConfigPage />} />
               <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/workspace" element={<WorkspaceSettingsPage />} />
               <Route path="/billing" element={<BillingPage />} />
               <Route path="/integrations" element={<IntegrationsPage />} />
               <Route path="/docs" element={<DocsPage />} />

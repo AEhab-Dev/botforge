@@ -109,6 +109,30 @@ export const modulesApi = {
   list: () => request<{ modules: Module[] }>('/modules'),
 }
 
+// ─── Workspace ────────────────────────────────────────────────────────────────
+
+export const workspaceApi = {
+  get: () => request<{ workspace: Workspace; members: WorkspaceMember[] }>('/workspace'),
+
+  update: (name: string) =>
+    request<{ workspace: Workspace }>('/workspace', {
+      method: 'PATCH', body: JSON.stringify({ name }),
+    }),
+
+  inviteMember: (email: string, role: 'member' | 'admin' = 'member') =>
+    request<{ member: WorkspaceMember }>('/workspace/members', {
+      method: 'POST', body: JSON.stringify({ email, role }),
+    }),
+
+  updateMemberRole: (userId: string, role: 'member' | 'admin') =>
+    request<{ member: WorkspaceMember }>(`/workspace/members/${userId}`, {
+      method: 'PATCH', body: JSON.stringify({ role }),
+    }),
+
+  removeMember: (userId: string) =>
+    request<{ ok: boolean }>(`/workspace/members/${userId}`, { method: 'DELETE' }),
+}
+
 // ─── Discord ──────────────────────────────────────────────────────────────────
 
 export const discordApi = {
@@ -184,6 +208,24 @@ export interface DiscordGuild {
   id: string
   name: string
   iconUrl: string | null
+}
+
+export interface Workspace {
+  id: string
+  name: string
+  ownerId: string
+  status: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface WorkspaceMember {
+  userId: string
+  role: 'owner' | 'admin' | 'member'
+  createdAt: string
+  email: string
+  displayName: string
+  avatarUrl: string | null
 }
 
 export { ApiError }

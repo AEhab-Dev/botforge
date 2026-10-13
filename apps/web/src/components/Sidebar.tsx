@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Bot, Plus, CreditCard,
-  BookOpen, HelpCircle, Settings, LogOut, Zap, X
+  BookOpen, HelpCircle, Settings, LogOut, Zap, X, Users,
 } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { useAuthStore } from '../store/auth'
@@ -80,6 +80,7 @@ export function Sidebar({ onClose }: SidebarProps) {
             Management
           </p>
           <div className="space-y-1">
+            <NavItem to="/workspace" icon={Users} label="Workspace" onClick={onClose} />
             <NavItem to="/billing" icon={CreditCard} label="Billing" onClick={onClose} />
           </div>
         </div>
