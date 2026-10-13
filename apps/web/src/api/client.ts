@@ -133,6 +133,20 @@ export const workspaceApi = {
     request<{ ok: boolean }>(`/workspace/members/${userId}`, { method: 'DELETE' }),
 }
 
+// ─── Billing ──────────────────────────────────────────────────────────────────
+
+export const billingApi = {
+  get: () => request<{ subscription: Subscription; plan: Plan; plans: Plan[] }>('/billing'),
+
+  checkout: (planId: 'pro' | 'business') =>
+    request<{ url: string }>('/billing/checkout', {
+      method: 'POST', body: JSON.stringify({ planId }),
+    }),
+
+  portal: () =>
+    request<{ url: string }>('/billing/portal', { method: 'POST' }),
+}
+
 // ─── Discord ──────────────────────────────────────────────────────────────────
 
 export const discordApi = {
@@ -226,6 +240,29 @@ export interface WorkspaceMember {
   email: string
   displayName: string
   avatarUrl: string | null
+}
+
+export interface Subscription {
+  id: string
+  workspaceId: string
+  planId: string
+  status: string
+  providerCustomerId: string | null
+  providerSubscriptionId: string | null
+  currentPeriodStart: string | null
+  currentPeriodEnd: string | null
+  cancelAtPeriodEnd: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Plan {
+  id: string
+  name: string
+  price: number
+  interval: 'month' | null
+  botLimit: number
+  features: string[]
 }
 
 export { ApiError }

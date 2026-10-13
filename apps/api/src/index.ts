@@ -9,6 +9,7 @@ import { botRoutes } from "./routes/bots.js";
 import { moduleRoutes } from "./routes/modules.js";
 import { discordRoutes } from "./routes/discord.js";
 import { workspaceRoutes } from "./routes/workspaces.js";
+import { billingRoutes } from "./routes/billing.js";
 
 const app = new Hono();
 
@@ -31,6 +32,7 @@ app.route("/api/v1/bots", botRoutes);
 app.route("/api/v1/modules", moduleRoutes);
 app.route("/api/v1/integrations/discord", discordRoutes);
 app.route("/api/v1/workspace", workspaceRoutes);
+app.route("/api/v1/billing", billingRoutes);
 
 // ─── Health check ─────────────────────────────────────────────────────────────
 
