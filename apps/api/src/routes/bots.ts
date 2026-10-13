@@ -169,6 +169,12 @@ botRoutes.post("/:botId/config/revisions", async (c) => {
 
   const nextRevision = (existing[0]?.revisionNumber ?? 0) + 1;
 
+  // Deactivate all previous revisions for this bot
+  await db
+    .update(botConfigRevisions)
+    .set({ isActive: false })
+    .where(eq(botConfigRevisions.botInstanceId, bot.id));
+
   const [revision] = await db
     .insert(botConfigRevisions)
     .values({
@@ -179,8 +185,15 @@ botRoutes.post("/:botId/config/revisions", async (c) => {
       createdBy: user.id,
       changeSummary: body?.changeSummary ?? null,
       validationStatus: "valid",
+      isActive: true,
     })
     .returning();
+
+  // Point the bot instance to this revision
+  await db
+    .update(botInstances)
+    .set({ currentConfigRevisionId: revision.id, updatedAt: new Date() })
+    .where(eq(botInstances.id, bot.id));
 
   return c.json({ revision }, 201);
 });
